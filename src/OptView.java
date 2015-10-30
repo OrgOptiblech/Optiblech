@@ -11,19 +11,20 @@ import java.awt.event.ActionListener;
 /** verantwortliche Klasse für die Darstellung */
 public class OptView extends JFrame {
 	
-	/** Ein Testbutton */
-	JButton bn_test;
+	/** Shapes Löschen*/
+	JButton bn_clear;
+	
+	/** Schalter um die Darstellung der Shapes an- und abzuschalten*/
+	boolean shapesVisible = true;
 	
 	/** Zeichenflaechenklasse
 	 * muss die Funktion paintComponent überschreiben 
 	 * hält einen Zeiger auf die Graphics2D Zeichenflaeche*/
 	class Zeichenflaeche extends JLabel {
-		Graphics2D m_g2;
-		
 		@Override protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
-			m_g2 = (Graphics2D)g; //aus Kompatibilitätsgründen
-			render(m_g2); //private zeichenfunktion
+			Graphics2D g2 = (Graphics2D)g; //aus Kompatibilitätsgründen
+			render(g2); //private zeichenfunktion
 		}
 	}
 	
@@ -42,8 +43,8 @@ public class OptView extends JFrame {
 	
 	/** Initialisierung des Hauptfensters */
 	void initWindow() {
-		bn_test = new JButton("Klick mich");
-		bn_test.setBounds(10, 10, 100, 20);
+		bn_clear = new JButton("Clear");
+		bn_clear.setBounds(10, 10, 150, 20);
 		
 		m_zeichenflaeche = new Zeichenflaeche();
 		m_zeichenflaeche.setBounds(200, 100, 800, 600);
@@ -51,26 +52,35 @@ public class OptView extends JFrame {
 		m_zeichenflaeche.setBackground(Color.WHITE);
 		
 		
-		bn_test.addActionListener(new ActionListener()
+		bn_clear.addActionListener(new ActionListener()
 		{//anonyme Klasse
 			public void actionPerformed(ActionEvent e)
 			{
-				//Hier die Aktion: z.B. 
+				if(shapesVisible) {
+					shapesVisible = false;
+					bn_clear.setText("Draw Shapes");
+				} else {
+					shapesVisible = true;
+					bn_clear.setText("Clear");
+				}
 				m_zeichenflaeche.repaint();
 			}
 		});
 		
 		//Dem Fensterbereich hinzufügen
-		getContentPane().add(bn_test);
+		getContentPane().add(bn_clear);
 		getContentPane().add(m_zeichenflaeche);
 	}
 	
-	/** Haupt-Zeichnen-Funktion 
-	 * durchläuft alle Formen (mit ihren Transformationen) die in OptModel enthalten sind
-	 * */
+	/** Haupt-Render-Funktion 
+	 * durchläuft die Formen (mit ihren Transformationen, in OptModel enthalten),
+	 *  die auf der Zeichenflaeche gezeichnet werden sollen. 
+	 */
 	void render(Graphics2D g2) {
-		for (int i = 0; i < m_model.ANZAHL_FORMEN; i++) {
-			g2.draw(m_model.m_rects.elementAt(i));
+		if(shapesVisible) {
+			for (int i = 0; i < m_model.NO_RECTS_TO_DRAW; i++) {
+				g2.draw(m_model.m_rectsToDraw.elementAt(i));
+			}
 		}
 		
 	}
