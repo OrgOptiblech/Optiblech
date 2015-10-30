@@ -23,7 +23,7 @@ public class OptView extends JFrame {
 		@Override protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			m_g2 = (Graphics2D)g; //aus Kompatibilitätsgründen
-			zeichnen(m_g2); //private zeichenfunktion
+			render(m_g2); //private zeichenfunktion
 		}
 	}
 	
@@ -40,7 +40,7 @@ public class OptView extends JFrame {
 		initWindow();
 	}
 	
-	//Fensterinitialisierung Hilfsfunktion
+	/** Initialisierung des Hauptfensters */
 	void initWindow() {
 		bn_test = new JButton("Klick mich");
 		bn_test.setBounds(10, 10, 100, 20);
@@ -56,7 +56,6 @@ public class OptView extends JFrame {
 			public void actionPerformed(ActionEvent e)
 			{
 				//Hier die Aktion: z.B. 
-				m_model.isForm1 = true;
 				m_zeichenflaeche.repaint();
 			}
 		});
@@ -66,8 +65,13 @@ public class OptView extends JFrame {
 		getContentPane().add(m_zeichenflaeche);
 	}
 	
-	/** Wrapper: weiterrleiten an OptModel */
-	void zeichnen(Graphics2D g2) {
-		m_model.zeichnen(g2);
+	/** Haupt-Zeichnen-Funktion 
+	 * durchläuft alle Formen (mit ihren Transformationen) die in OptModel enthalten sind
+	 * */
+	void render(Graphics2D g2) {
+		for (int i = 0; i < m_model.ANZAHL_FORMEN; i++) {
+			g2.draw(m_model.m_rects.elementAt(i));
+		}
+		
 	}
 }
