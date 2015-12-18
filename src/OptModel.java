@@ -1,28 +1,26 @@
-import java.awt.Rectangle;
-import java.util.Vector;
 
-/** enthält alle Formen und die Hauptlogik bis auf das Zeichnen
- * 
- */
+/** enthält alle Formen und die Hauptlogik bis auf das Zeichnen */
 public class OptModel {
 	
-	public Vector<Rectangle> m_rectsToDraw;
-	public int NO_RECTS_TO_DRAW = 4;
+	/** Liste der Shapes*/
+	public ShapeColl m_shapeColl;
 	
-	public OptModel() {
-		m_rectsToDraw = new Vector<Rectangle>(NO_RECTS_TO_DRAW);
-		Rectangle r1 = new Rectangle(10, 10, 100, 100);
-		Rectangle r2 = new Rectangle(30, 30, 100, 100);
-		Rectangle r3 = new Rectangle(100, 200, 100, 100);
-		Rectangle r4 = new Rectangle(200, 400, 100, 100);
+	/** Liste der Matrizen (Koordinatentransformationen) */
+	public PosColl m_posColl;
 		
-		m_rectsToDraw.add(r1);
-		m_rectsToDraw.add(r2);
-		m_rectsToDraw.add(r3);
-		m_rectsToDraw.add(r4);
-		
+	public OptModel(ShapeColl shapeColl, PosColl posColl) {
+		m_shapeColl = shapeColl;
+		m_posColl = posColl;
 	}
 	
+	//Test
+	public void Shape1NachRechts() {
+		m_posColl.getTransl(0).x += 10;
+	}
+	
+	public void Shape2NachUnten() {
+		m_posColl.getTransl(1).y += 10;
+	}
 	
 	
 }
