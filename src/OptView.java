@@ -25,7 +25,7 @@ public class OptView extends JFrame {
 	
 	
 	/** Schalter um die Darstellung der Shapes an- und abzuschalten*/
-	boolean shapesVisible = false;
+	boolean shapesVisible = true;                                    // Änderung von Torsten Kropp am 20.12.2015
 	
 	/** Zeichenflaechenklasse
 	 * muss die Funktion paintComponent überschreiben 
@@ -85,7 +85,7 @@ public class OptView extends JFrame {
 					shapesVisible = false;
 					bn_clear.setText("Draw Shapes");
 				} else {
-					shapesVisible = true;
+					shapesVisible = false;                           // Änderung von Torsten Kropp am 20.12.2015
 					bn_clear.setText("Clear");
 				}
 				m_zeichenflaeche.repaint();
